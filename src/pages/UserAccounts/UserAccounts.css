@@ -1,0 +1,92 @@
+.user-accounts {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-top: 50px;
+  flex-direction: column;
+  padding: 10px 100px 0 100px;
+  min-height: calc(100vh - 50px);
+  background: #edf3f8;
+}
+
+.user-accounts .top {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.user-accounts .top .search {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 10px;
+  flex: 2;
+  background: white;
+}
+
+.user-accounts .top .right {
+  flex: 5;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  grid-gap: 20px;
+}
+
+.user-accounts .top .right .sort {
+  width: 200px;
+}
+
+.user-accounts .top .right .sort .form {
+  width: 100%;
+}
+
+.user-accounts .table {
+  width: 100%;
+}
+
+.user-accounts .table .titles {
+  display: flex;
+  margin-top: 20px;
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
+  grid-gap: 5px;
+  border: solid 1px #ccc;
+}
+
+.user-accounts .table .titles .title {
+  border-left: solid 1px #ccc;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.user-accounts .table .rows {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-accounts .table .rows .row {
+  display: flex;
+  margin-top: 5px;
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
+  grid-gap: 5px;
+}
+
+.user-accounts .table .rows .row .box {
+  border-left: solid 1px #ccc;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.user-accounts .table .rows .row .box.name {
+  display: flex;
+  align-items: center;
+  grid-gap: 10px;
+}

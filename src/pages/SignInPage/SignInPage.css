@@ -10,11 +10,11 @@
 .signin-page .container {
   background: white;
   width: 300px;
-  height: 400px;
+  height: 300px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   padding: 20px;
   position: relative;
 }

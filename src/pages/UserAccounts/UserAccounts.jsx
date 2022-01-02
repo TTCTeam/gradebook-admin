@@ -8,6 +8,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { Link } from 'react-router-dom';
 
 export default function UserAccounts() {
   const [userAccounts, setUserAccounts] = React.useState(data);
@@ -94,7 +95,11 @@ export default function UserAccounts() {
                 .includes(key.toLowerCase());
             })
             .map((userAccount) => (
-              <div className="row" key={userAccount.id}>
+              <Link
+                className="row"
+                key={userAccount.id}
+                to={`/users/${userAccount.id}`}
+              >
                 <div className="box" style={{ flex: 1, borderLeft: 'none' }}>
                   {userAccount.id}
                 </div>
@@ -116,7 +121,7 @@ export default function UserAccounts() {
                 <div className="box" style={{ flex: 1 }}>
                   {userAccount.status}
                 </div>
-              </div>
+              </Link>
             ))}
         </div>
       </div>

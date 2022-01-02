@@ -76,6 +76,13 @@
   padding: 10px;
   border-radius: 5px;
   grid-gap: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+}
+
+.admin-accounts .table .rows .row:hover {
+  background: #f5f5f5;
 }
 
 .admin-accounts .table .rows .row .box {

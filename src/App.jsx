@@ -5,6 +5,8 @@ import Navbar from './components/Navbar/Navbar';
 import AdminAccounts from './pages/AdminAccounts/AdminAccounts';
 import UserAccounts from './pages/UserAccounts/UserAccounts';
 import Classes from './pages/Classes/Classes';
+import UserDetail from './pages/UserDetail/UserDetail';
+import AdminDetail from './pages/AdminDetail/AdminDetail';
 
 export default function App() {
   const isSignedIn = true;
@@ -16,7 +18,9 @@ export default function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/admins" element={<AdminAccounts />} />
+            <Route path="/admins/:adminId" element={<AdminDetail />} />
             <Route path="/users" element={<UserAccounts />} />
+            <Route path="/users/:userId" element={<UserDetail />} />
             <Route path="/classes" element={<Classes />} />
           </Routes>
         </>

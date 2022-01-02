@@ -1,0 +1,99 @@
+.classes {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-top: 50px;
+  flex-direction: column;
+  padding: 10px 100px 0 100px;
+  min-height: calc(100vh - 50px);
+  background: #edf3f8;
+}
+
+.classes .top {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.classes .top .search {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 10px;
+  flex: 2;
+  background: white;
+}
+
+.classes .top .right {
+  flex: 5;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  grid-gap: 20px;
+}
+
+.classes .top .right .sort {
+  width: 200px;
+}
+
+.classes .top .right .sort .form {
+  width: 100%;
+}
+
+.classes .table {
+  width: 100%;
+}
+
+.classes .table .titles {
+  display: flex;
+  margin-top: 20px;
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
+  grid-gap: 5px;
+  border: solid 1px #ccc;
+}
+
+.classes .table .titles .title {
+  border-left: solid 1px #ccc;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.classes .table .rows {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.classes .table .rows .row {
+  display: flex;
+  margin-top: 5px;
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
+  grid-gap: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+}
+
+.classes .table .rows .row:hover {
+  background: #f5f5f5;
+}
+
+.classes .table .rows .row .box {
+  border-left: solid 1px #ccc;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.classes .table .rows .row .box.name {
+  display: flex;
+  align-items: center;
+  grid-gap: 10px;
+}

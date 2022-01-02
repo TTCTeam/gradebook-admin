@@ -13,6 +13,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { Link } from 'react-router-dom';
 
 export default function AdminAccounts() {
   const [adminAccounts, setAdminAccounts] = React.useState(data);
@@ -102,7 +103,11 @@ export default function AdminAccounts() {
                 .includes(key.toLowerCase());
             })
             .map((adminAccount) => (
-              <div className="row" key={adminAccount.id}>
+              <Link
+                to={`/admins/${adminAccount.id}`}
+                className="row"
+                key={adminAccount.id}
+              >
                 <div className="box" style={{ flex: 1, borderLeft: 'none' }}>
                   {adminAccount.id}
                 </div>
@@ -116,7 +121,7 @@ export default function AdminAccounts() {
                 <div className="box" style={{ flex: 2 }}>
                   {adminAccount.createAt}
                 </div>
-              </div>
+              </Link>
             ))}
         </div>
       </div>

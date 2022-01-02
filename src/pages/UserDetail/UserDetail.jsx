@@ -5,6 +5,12 @@ import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import { userStatus } from '../../constant/userStatus';
 import { Link } from 'react-router-dom';
 
@@ -66,8 +72,27 @@ export default function UserDetail() {
   const [userDetail, setUserDetail] = useState(data);
   const [classList, setClassList] = useState(classes);
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const handleChange = (event) => {
-    setUserDetail({ ...userDetail, status: event.target.value });
+    handleClickOpen();
+  };
+
+  const handleChangeStatus = () => {
+    const newStatus =
+      userDetail.status === userStatus.ACTIVE
+        ? userStatus.BLOCKED
+        : userStatus.ACTIVE;
+    setUserDetail({ ...userDetail, status: newStatus });
+    handleClose();
   };
 
   console.log(userDetail);
@@ -118,7 +143,7 @@ export default function UserDetail() {
                     onChange={handleChange}
                   >
                     <MenuItem value={userStatus.ACTIVE}>Active</MenuItem>
-                    <MenuItem value={userStatus.BLOCKED}>Banned</MenuItem>
+                    <MenuItem value={userStatus.BLOCKED}>Blocked</MenuItem>
                   </Select>
                 </FormControl>
               </Box>
@@ -138,6 +163,29 @@ export default function UserDetail() {
           ))}
         </div>
       </div>
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Gradebook Admin's Nonification"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            This action may result in some constraints on this account. Are you
+            sure you want to change the status of this account?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Disagree</Button>
+          <Button onClick={handleChangeStatus} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

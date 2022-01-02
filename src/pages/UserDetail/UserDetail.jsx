@@ -164,26 +164,17 @@ export default function UserDetail() {
         </div>
       </div>
 
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Gradebook Admin's Nonification"}
-        </DialogTitle>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>{"Gradebook Admin's Nonification"}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          <DialogContentText>
             This action may result in some constraints on this account. Are you
             sure you want to change the status of this account?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleChangeStatus} autoFocus>
-            Agree
-          </Button>
+          <Button onClick={handleChangeStatus}>Agree</Button>
         </DialogActions>
       </Dialog>
     </div>

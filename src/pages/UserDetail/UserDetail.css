@@ -4,7 +4,7 @@
   align-items: center;
   margin-top: 50px;
   flex-direction: column;
-  padding: 0 300px 100px 300px;
+  padding: 0 300px 0 300px;
   min-height: calc(100vh - 50px);
   background: #edf3f8;
   position: relative;

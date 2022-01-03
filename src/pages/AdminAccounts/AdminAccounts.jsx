@@ -39,7 +39,11 @@ export default function AdminAccounts() {
     const fetchAdminAccounts = async () => {
       setIsLoading(true);
       const res = await getAllAdminAccounts();
-      setAdminAccounts(res);
+      if (res.status === 200) {
+        setAdminAccounts(res.data);
+      } else {
+        alert("Error.");
+      }
       setIsLoading(false);
     };
 
@@ -54,18 +58,20 @@ export default function AdminAccounts() {
 
   const submitCreateNewAdminAccount = async () => {
     const newAdminAccount = {
-      id: adminAccounts.length + 1,
       name,
       username,
       password,
-      createdAt: new Date().toISOString(),
     };
     const res = await createNewAdminAccount(newAdminAccount);
-    console.log(res);
-    setAdminAccounts([...adminAccounts, newAdminAccount]);
-    setPassword('');
-    setUsername('');
-    setName('');
+    if (res.status === 201) {
+      const createdAccount = res.data;
+      setAdminAccounts([...adminAccounts, createdAccount]);
+      setPassword('');
+      setUsername('');
+      setName('');
+    } else {
+      alert("Error.");
+    }
     handleClose();
   };
 
@@ -79,12 +85,12 @@ export default function AdminAccounts() {
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={isLoading}
       >
-        <CircularProgress />
+        <CircularProgress/>
       </Backdrop>
       <h2>Admin Accounts</h2>
       <div className="top">
         <div className="search">
-          <SearchIcon />
+          <SearchIcon/>
           <InputBase
             sx={{ ml: 1, flex: 1 }}
             placeholder="Search..."
@@ -114,7 +120,7 @@ export default function AdminAccounts() {
           </div>
           <Button
             variant="contained"
-            startIcon={<AddIcon />}
+            startIcon={<AddIcon/>}
             onClick={handleOpen}
           >
             Add new

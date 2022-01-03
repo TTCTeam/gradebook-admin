@@ -46,8 +46,12 @@ export default function AdminDetail() {
   useEffect(() => {
     const fetchAdminDetail = async (adminId) => {
       setIsLoading(true);
-      const res = await getAdminAccountById();
-      setAdminDetail(res);
+      const res = await getAdminAccountById(adminId);
+      if (res.status === 200) {
+        setAdminDetail(res);
+      } else {
+        alert("Error.");
+      }
       setIsLoading(false);
     };
 
@@ -59,9 +63,9 @@ export default function AdminDetail() {
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={isLoading}
       >
-        <CircularProgress />
+        <CircularProgress/>
       </Backdrop>
-      <div className="cover-image" />
+      <div className="cover-image"/>
       <div className="avatar">
         <Avatar
           {...stringAvatar(adminDetail.name || 'Admin Detail')}
@@ -71,7 +75,7 @@ export default function AdminDetail() {
       <div className="fullName">{adminDetail.name}</div>
       <div className="about">
         <div className="about__title">About</div>
-        <hr />
+        <hr/>
         <div className="content">
           <div className="infor">
             <div className="title">Role</div>

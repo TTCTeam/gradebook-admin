@@ -11,6 +11,8 @@ import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import Select from '@mui/material/Select';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
+import { userStatus } from '../../constant/userStatus.js';
 
 export default function UserAccounts() {
   const [userAccounts, setUserAccounts] = useState([]);
@@ -23,7 +25,11 @@ export default function UserAccounts() {
     const fetchUserAccounts = async () => {
       setIsLoading(true);
       const res = await getAllUserAccounts();
-      setUserAccounts(res);
+      if (res.status === 200) {
+        setUserAccounts(res.data);
+      } else {
+        alert("Error.");
+      }
       setIsLoading(false);
     };
 
@@ -46,12 +52,12 @@ export default function UserAccounts() {
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={isLoading}
       >
-        <CircularProgress />
+        <CircularProgress/>
       </Backdrop>
       <h2>User Accounts</h2>
       <div className="top">
         <div className="search">
-          <SearchIcon />
+          <SearchIcon/>
           <InputBase
             sx={{ ml: 1, flex: 1 }}
             placeholder="Search..."
@@ -123,22 +129,22 @@ export default function UserAccounts() {
                   {userAccount.id}
                 </div>
                 <div className="box name" style={{ flex: 1 }}>
-                  {userAccount.studentId}
+                  {userAccount.username}
                 </div>
                 <div className="box" style={{ flex: 2 }}>
-                  {userAccount.firstName}
+                  {userAccount.firstname}
                 </div>
                 <div className="box" style={{ flex: 2 }}>
-                  {userAccount.lastName}
+                  {userAccount.lastname}
                 </div>
                 <div className="box" style={{ flex: 3 }}>
                   {userAccount.email}
                 </div>
                 <div className="box" style={{ flex: 1 }}>
-                  {userAccount.createAt}
+                  {moment(userAccount.createdAt).format('DD/MM/YYYY')}
                 </div>
                 <div className="box" style={{ flex: 1 }}>
-                  {userAccount.status}
+                  {Object.values(userStatus).find((status) => status.value === userAccount.status)?.text}
                 </div>
               </Link>
             ))}

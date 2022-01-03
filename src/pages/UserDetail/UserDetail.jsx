@@ -76,10 +76,14 @@ export default function UserDetail() {
   const { userId } = useParams();
 
   useEffect(() => {
-    const fetchUserDetail = async (adminId) => {
+    const fetchUserDetail = async (id) => {
       setIsLoading(true);
-      const res = await getUserAccountById();
-      setUserDetail(res);
+      const res = await getUserAccountById(id);
+      if (res.status === 200) {
+        setUserDetail(res.data);
+      } else {
+        alert("Error.");
+      }
       setIsLoading(false);
     };
 
@@ -94,19 +98,22 @@ export default function UserDetail() {
     setOpen(false);
   };
 
-  const handleChange = (event) => {
+  const handleChange = () => {
     handleClickOpen();
   };
 
   const handleChangeStatus = async () => {
     const newStatus =
-      userDetail.status === userStatus.ACTIVE
-        ? userStatus.BLOCKED
-        : userStatus.ACTIVE;
+      userDetail.status === userStatus.ACTIVE.value
+        ? userStatus.BLOCKED.value
+        : userStatus.ACTIVE.value;
 
     const res = await changeStatusOfUserAccount(userId, newStatus);
-    console.log(res);
-    setUserDetail({ ...userDetail, status: newStatus });
+    if (res.status === 200) {
+      setUserDetail({ ...userDetail, status: newStatus });
+    } else {
+      alert("Error.");
+    }
     handleClose();
   };
 
@@ -116,24 +123,24 @@ export default function UserDetail() {
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={isLoading}
       >
-        <CircularProgress />
+        <CircularProgress/>
       </Backdrop>
-      <div className="cover-image" />
+      <div className="cover-image"/>
 
       <div className="avatar">
         <Avatar
-          {...stringAvatar(`${userDetail.firstName} ${userDetail.lastName}`)}
+          {...stringAvatar(`${userDetail.firstname} ${userDetail.lastname}`)}
           sx={{ width: 150, height: 150 }}
         />
       </div>
 
       <div className="fullName">
-        {userDetail.firstName} {userDetail.lastName}
+        {userDetail.firstname} {userDetail.lastname}
       </div>
 
       <div className="about">
         <div className="about__title">About</div>
-        <hr />
+        <hr/>
         <div className="content">
           <div className="infor">
             <div className="title">Role</div>
@@ -141,7 +148,7 @@ export default function UserDetail() {
           </div>
           <div className="infor">
             <div className="title">Student Id</div>
-            <div className="value">{userDetail.studentId}</div>
+            <div className="value">{userDetail.username}</div>
           </div>
           <div className="infor">
             <div className="title">Email</div>
@@ -163,8 +170,8 @@ export default function UserDetail() {
                     value={userDetail.status ?? ''}
                     onChange={handleChange}
                   >
-                    <MenuItem value={userStatus.ACTIVE}>Active</MenuItem>
-                    <MenuItem value={userStatus.BLOCKED}>Blocked</MenuItem>
+                    <MenuItem value={userStatus.ACTIVE.value}>Active</MenuItem>
+                    <MenuItem value={userStatus.BLOCKED.value}>Blocked</MenuItem>
                   </Select>
                 </FormControl>
               </Box>

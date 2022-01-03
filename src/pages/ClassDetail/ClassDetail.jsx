@@ -18,7 +18,11 @@ export default function ClassDetail() {
     const fetchClassDetail = async (classId) => {
       setIsLoading(true);
       const res = await getClassById(classId);
-      setClassDetail(res);
+      if (res.status === 200) {
+        setClassDetail(res.data);
+      } else {
+        alert("Error.");
+      }
       setIsLoading(false);
     };
 
@@ -31,7 +35,7 @@ export default function ClassDetail() {
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={isLoading}
       >
-        <CircularProgress />
+        <CircularProgress/>
       </Backdrop>
       <div className="cover-image">
         <div className="fullName">{classDetail.name}</div>
@@ -39,7 +43,7 @@ export default function ClassDetail() {
 
       <div className="about">
         <div className="about__title">About</div>
-        <hr />
+        <hr/>
         <div className="content">
           <div className="infor">
             <div className="title">Id</div>
@@ -60,7 +64,7 @@ export default function ClassDetail() {
 
       <div className="class-list">
         <div className="class-list__title">Members</div>
-        <hr />
+        <hr/>
         <div className="list">
           {classDetail?.members?.map((item) => (
             <Link to={`/users/${item.id}`} key={item.id} className="item">

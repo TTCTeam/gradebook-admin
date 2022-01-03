@@ -24,7 +24,12 @@ export default function Classes() {
     const fetchClasses = async () => {
       setIsLoading(true);
       const res = await getAllClasses();
-      setClasses(res);
+      if (res.status===200){
+        setClasses(res.data);
+      }
+      else {
+        alert("Error.");
+      }
       setIsLoading(false);
     };
 

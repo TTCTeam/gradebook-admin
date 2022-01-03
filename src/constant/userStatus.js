@@ -1,4 +1,4 @@
 export const userStatus = {
-  ACTIVE: 1,
-  BLOCKED: 0,
+  ACTIVE: { value: 1, text: 'Active' },
+  BLOCKED: { value: 0, text: 'Blocked' },
 };

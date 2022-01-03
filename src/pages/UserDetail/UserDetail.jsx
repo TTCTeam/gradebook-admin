@@ -17,7 +17,10 @@ import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import moment from 'moment';
 // import { Link } from 'react-router-dom';
-import { getUserAccountById } from '../../api/userAccounts';
+import {
+  changeStatusOfUserAccount,
+  getUserAccountById,
+} from '../../api/userAccounts';
 import { useParams } from 'react-router-dom';
 
 // const classes = [
@@ -70,7 +73,7 @@ export default function UserDetail() {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { adminId } = useParams();
+  const { userId } = useParams();
 
   useEffect(() => {
     const fetchUserDetail = async (adminId) => {
@@ -80,7 +83,7 @@ export default function UserDetail() {
       setIsLoading(false);
     };
 
-    fetchUserDetail(adminId);
+    fetchUserDetail(userId);
   }, []);
 
   const handleClickOpen = () => {
@@ -95,11 +98,14 @@ export default function UserDetail() {
     handleClickOpen();
   };
 
-  const handleChangeStatus = () => {
+  const handleChangeStatus = async () => {
     const newStatus =
       userDetail.status === userStatus.ACTIVE
         ? userStatus.BLOCKED
         : userStatus.ACTIVE;
+
+    const res = await changeStatusOfUserAccount(userId, newStatus);
+    console.log(res);
     setUserDetail({ ...userDetail, status: newStatus });
     handleClose();
   };

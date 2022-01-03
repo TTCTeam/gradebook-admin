@@ -1,21 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import './UserAccounts.css';
 import InputBase from '@mui/material/InputBase';
 import Box from '@mui/material/Box';
-import { data } from '../../api/userAccounts';
+import { getAllUserAccounts } from '../../api/userAccounts';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 import Select from '@mui/material/Select';
 import { Link } from 'react-router-dom';
 
 export default function UserAccounts() {
-  const [userAccounts, setUserAccounts] = React.useState(data);
-  // const [isLoading, setIsLoading] = React.useState(true);
-  const [search, setSearch] = React.useState('');
-  const [key, setKey] = React.useState('');
-  const [sort, setSort] = React.useState('');
+  const [userAccounts, setUserAccounts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [search, setSearch] = useState('');
+  const [key, setKey] = useState('');
+  const [sort, setSort] = useState('');
+
+  useEffect(() => {
+    const fetchUserAccounts = async () => {
+      setIsLoading(true);
+      const res = await getAllUserAccounts();
+      setUserAccounts(res);
+      setIsLoading(false);
+    };
+
+    fetchUserAccounts();
+  }, []);
 
   const handleSearch = (e) => {
     if (e.key === 'Enter') {
@@ -29,6 +42,12 @@ export default function UserAccounts() {
 
   return (
     <div className="user-accounts">
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isLoading}
+      >
+        <CircularProgress />
+      </Backdrop>
       <h2>User Accounts</h2>
       <div className="top">
         <div className="search">

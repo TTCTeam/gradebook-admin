@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react';
 import './UserDetail.css';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -12,32 +13,27 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { userStatus } from '../../constant/userStatus';
-import { Link } from 'react-router-dom';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import moment from 'moment';
+// import { Link } from 'react-router-dom';
+import { getUserAccountById } from '../../api/userAccounts';
+import { useParams } from 'react-router-dom';
 
-const data = {
-  id: 1,
-  firstName: 'Minh Cuong',
-  lastName: 'Ha',
-  studentId: '18120297',
-  email: 'cuongha2k@gmail.com',
-  createAt: '2020-01-01',
-  status: 1,
-};
-
-const classes = [
-  {
-    id: 1,
-    name: 'CNTT',
-  },
-  {
-    id: 2,
-    name: 'CNTT2',
-  },
-  {
-    id: 3,
-    name: 'CNTT3',
-  },
-];
+// const classes = [
+//   {
+//     id: 1,
+//     name: 'CNTT',
+//   },
+//   {
+//     id: 2,
+//     name: 'CNTT2',
+//   },
+//   {
+//     id: 3,
+//     name: 'CNTT3',
+//   },
+// ];
 
 function stringToColor(string) {
   let hash = 0;
@@ -69,10 +65,23 @@ function stringAvatar(name) {
 }
 
 export default function UserDetail() {
-  const [userDetail, setUserDetail] = useState(data);
-  const [classList, setClassList] = useState(classes);
+  const [userDetail, setUserDetail] = useState([]);
+  // const [classList, setClassList] = useState(classes);
+  const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [open, setOpen] = React.useState(false);
+  const { adminId } = useParams();
+
+  useEffect(() => {
+    const fetchUserDetail = async (adminId) => {
+      setIsLoading(true);
+      const res = await getUserAccountById();
+      setUserDetail(res);
+      setIsLoading(false);
+    };
+
+    fetchUserDetail(adminId);
+  }, []);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -99,6 +108,12 @@ export default function UserDetail() {
 
   return (
     <div className="user-detail">
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isLoading}
+      >
+        <CircularProgress />
+      </Backdrop>
       <div className="cover-image" />
 
       <div className="avatar">
@@ -130,7 +145,9 @@ export default function UserDetail() {
           </div>
           <div className="infor">
             <div className="title">Created At</div>
-            <div className="value">{userDetail.createAt}</div>
+            <div className="value">
+              {moment(userDetail.createdAt).format('DD/MM/YYYY')}
+            </div>
           </div>
           <div className="infor">
             <div className="title">Status</div>
@@ -139,7 +156,7 @@ export default function UserDetail() {
                 <FormControl fullWidth>
                   <Select
                     nolabel="true"
-                    value={userDetail.status}
+                    value={userDetail.status ?? ''}
                     onChange={handleChange}
                   >
                     <MenuItem value={userStatus.ACTIVE}>Active</MenuItem>
@@ -152,7 +169,7 @@ export default function UserDetail() {
         </div>
       </div>
 
-      <div className="class-list">
+      {/* <div className="class-list">
         <div className="class-list__title">Class List</div>
         <hr />
         <div className="list">
@@ -162,7 +179,7 @@ export default function UserDetail() {
             </Link>
           ))}
         </div>
-      </div>
+      </div> */}
 
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{"Gradebook Admin's Nonification"}</DialogTitle>

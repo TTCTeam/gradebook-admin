@@ -1,29 +1,50 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import './AdminAccounts.css';
 import InputBase from '@mui/material/InputBase';
+import moment from 'moment';
 import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
-import { data } from '../../api/adminAccounts';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 import Select from '@mui/material/Select';
 import { Link } from 'react-router-dom';
+import {
+  getAllAdminAccounts,
+  createNewAdminAccount,
+} from '../../api/adminAccounts';
 
 export default function AdminAccounts() {
-  const [adminAccounts, setAdminAccounts] = React.useState(data);
-  // const [isLoading, setIsLoading] = React.useState(true);
-  const [search, setSearch] = React.useState('');
-  const [key, setKey] = React.useState('');
-  const [open, setOpen] = React.useState(false);
-  const [sort, setSort] = React.useState('');
+  const [adminAccounts, setAdminAccounts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [search, setSearch] = useState('');
+  const [key, setKey] = useState('');
+  const [open, setOpen] = useState(false);
+  const [sort, setSort] = useState('');
+  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  useEffect(() => {
+    const fetchAdminAccounts = async () => {
+      setIsLoading(true);
+      const res = await getAllAdminAccounts();
+      setAdminAccounts(res);
+      setIsLoading(false);
+    };
+
+    fetchAdminAccounts();
+  }, []);
 
   const handleSearch = (e) => {
     if (e.key === 'Enter') {
@@ -31,7 +52,22 @@ export default function AdminAccounts() {
     }
   };
 
-  const submitCreateNewAdminAccount = () => {};
+  const submitCreateNewAdminAccount = async () => {
+    const newAdminAccount = {
+      id: adminAccounts.length + 1,
+      name,
+      username,
+      password,
+      createdAt: new Date().toISOString(),
+    };
+    const res = await createNewAdminAccount(newAdminAccount);
+    console.log(res);
+    setAdminAccounts([...adminAccounts, newAdminAccount]);
+    setPassword('');
+    setUsername('');
+    setName('');
+    handleClose();
+  };
 
   const handleChangeSort = (e) => {
     setSort(e.target.value);
@@ -39,6 +75,12 @@ export default function AdminAccounts() {
 
   return (
     <div className="admin-accounts">
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isLoading}
+      >
+        <CircularProgress />
+      </Backdrop>
       <h2>Admin Accounts</h2>
       <div className="top">
         <div className="search">
@@ -119,7 +161,7 @@ export default function AdminAccounts() {
                   {adminAccount.username}
                 </div>
                 <div className="box" style={{ flex: 2 }}>
-                  {adminAccount.createAt}
+                  {moment(adminAccount.createdAt).format('DD/MM/YYYY')}
                 </div>
               </Link>
             ))}
@@ -131,9 +173,23 @@ export default function AdminAccounts() {
             Create new admin account
           </Typography>
           <div className="admin-modal__container">
-            <TextField className="field" label="Name" variant="outlined" />
-            <TextField className="field" label="Username" variant="outlined" />
             <TextField
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="field"
+              label="Name"
+              variant="outlined"
+            />
+            <TextField
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="field"
+              label="Username"
+              variant="outlined"
+            />
+            <TextField
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="field"
               label="Password"
               variant="outlined"

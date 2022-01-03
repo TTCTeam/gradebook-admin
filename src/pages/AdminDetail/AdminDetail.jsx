@@ -38,7 +38,7 @@ function stringAvatar(name) {
 }
 
 export default function AdminDetail() {
-  const [adminDetail, setAdminDetail] = useState([]);
+  const [adminDetail, setAdminDetail] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
   const { adminId } = useParams();

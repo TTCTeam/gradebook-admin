@@ -7,6 +7,7 @@ import UserAccounts from './pages/UserAccounts/UserAccounts';
 import Classes from './pages/Classes/Classes';
 import UserDetail from './pages/UserDetail/UserDetail';
 import AdminDetail from './pages/AdminDetail/AdminDetail';
+import ClassDetail from './pages/ClassDetail/ClassDetail';
 
 export default function App() {
   const isSignedIn = true;
@@ -22,6 +23,7 @@ export default function App() {
             <Route path="/users" element={<UserAccounts />} />
             <Route path="/users/:userId" element={<UserDetail />} />
             <Route path="/classes" element={<Classes />} />
+            <Route path="/classes/:classId" element={<ClassDetail />} />
           </Routes>
         </>
       ) : (

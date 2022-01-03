@@ -68,7 +68,7 @@ function stringAvatar(name) {
 }
 
 export default function UserDetail() {
-  const [userDetail, setUserDetail] = useState([]);
+  const [userDetail, setUserDetail] = useState({});
   // const [classList, setClassList] = useState(classes);
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -109,8 +109,6 @@ export default function UserDetail() {
     setUserDetail({ ...userDetail, status: newStatus });
     handleClose();
   };
-
-  console.log(userDetail);
 
   return (
     <div className="user-detail">

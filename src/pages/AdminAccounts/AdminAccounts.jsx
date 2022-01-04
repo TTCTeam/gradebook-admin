@@ -88,6 +88,11 @@ export default function AdminAccounts() {
         return new Date(b.createdAt) - new Date(a.createdAt);
       });
     }
+    if (newSort === '') {
+      adminAccounts.sort(function (a, b) {
+        return a.id - b.id;
+      });
+    }
   };
 
   return (

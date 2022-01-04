@@ -54,6 +54,11 @@ export default function Classes() {
         return new Date(b.createdAt) - new Date(a.createdAt);
       });
     }
+    if (newSort === '') {
+      classes.sort(function (a, b) {
+        return a.id - b.id;
+      });
+    }
   };
 
   return (

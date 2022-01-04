@@ -1,5 +1,4 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import HomePage from './pages/HomePage/HomePage';
 import SignInPage from './pages/SignInPage/SignInPage';
 import Navbar from './components/Navbar/Navbar';
 import AdminAccounts from './pages/AdminAccounts/AdminAccounts';
@@ -17,7 +16,7 @@ export default function App() {
         <>
           <Navbar />
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<Navigate replace to="/admins" />} />
             <Route path="/admins" element={<AdminAccounts />} />
             <Route path="/admins/:adminId" element={<AdminDetail />} />
             <Route path="/users" element={<UserAccounts />} />

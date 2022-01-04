@@ -23,12 +23,35 @@ export const getUserAccountById = async (userId) => {
 
 export const changeStatusOfUserAccount = async (userId, status) => {
   const url = `${apiUrl}/admin/users/${userId}`;
-  const response = await axios.put(url, {
-    status,
-  }, {
-    headers: {
-      'Content-Type': 'application/json',
+  const response = await axios.put(
+    url,
+    {
+      status,
     },
-  });
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  );
+  return response;
+};
+
+export const changeStudentIdOfUserAccount = async (userId, studentId) => {
+  if (studentId === '') {
+    studentId = null;
+  }
+  const url = `${apiUrl}/admin/users/${userId}`;
+  const response = await axios.put(
+    url,
+    {
+      username: studentId,
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  );
   return response;
 };

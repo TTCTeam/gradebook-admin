@@ -15,28 +15,16 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { userStatus } from '../../constant/userStatus';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import InputBase from '@mui/material/InputBase';
+import EditIcon from '@mui/icons-material/Edit';
+import SaveIcon from '@mui/icons-material/Save';
 import moment from 'moment';
-// import { Link } from 'react-router-dom';
 import {
   changeStatusOfUserAccount,
   getUserAccountById,
+  changeStudentIdOfUserAccount,
 } from '../../api/userAccounts';
 import { useParams } from 'react-router-dom';
-
-// const classes = [
-//   {
-//     id: 1,
-//     name: 'CNTT',
-//   },
-//   {
-//     id: 2,
-//     name: 'CNTT2',
-//   },
-//   {
-//     id: 3,
-//     name: 'CNTT3',
-//   },
-// ];
 
 function stringToColor(string) {
   let hash = 0;
@@ -69,9 +57,10 @@ function stringAvatar(name) {
 
 export default function UserDetail() {
   const [userDetail, setUserDetail] = useState({});
-  // const [classList, setClassList] = useState(classes);
+  const [studentId, setStudentId] = useState('');
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [edit, setEdit] = useState(false);
 
   const { userId } = useParams();
 
@@ -82,13 +71,17 @@ export default function UserDetail() {
       if (res.status === 200) {
         setUserDetail(res.data);
       } else {
-        alert("Error.");
+        alert('Error.');
       }
       setIsLoading(false);
     };
 
     fetchUserDetail(userId);
   }, []);
+
+  useEffect(() => {
+    setStudentId(userDetail.username);
+  }, [userDetail]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -112,9 +105,19 @@ export default function UserDetail() {
     if (res.status === 200) {
       setUserDetail({ ...userDetail, status: newStatus });
     } else {
-      alert("Error.");
+      alert('Error.');
     }
     handleClose();
+  };
+
+  const submitChangeStudentId = async () => {
+    const res = await changeStudentIdOfUserAccount(userId, studentId);
+    if (res.status === 200) {
+      setUserDetail({ ...userDetail, username: studentId });
+    } else {
+      alert('Error.');
+    }
+    setEdit(false);
   };
 
   return (
@@ -123,9 +126,9 @@ export default function UserDetail() {
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={isLoading}
       >
-        <CircularProgress/>
+        <CircularProgress />
       </Backdrop>
-      <div className="cover-image"/>
+      <div className="cover-image" />
 
       <div className="avatar">
         <Avatar
@@ -140,7 +143,7 @@ export default function UserDetail() {
 
       <div className="about">
         <div className="about__title">About</div>
-        <hr/>
+        <hr />
         <div className="content">
           <div className="infor">
             <div className="title">Role</div>
@@ -148,7 +151,27 @@ export default function UserDetail() {
           </div>
           <div className="infor">
             <div className="title">Student Id</div>
-            <div className="value">{userDetail.username}</div>
+            <div className="value">
+              <div className="studentId">
+                <InputBase
+                  className="input-base"
+                  value={studentId ?? ''}
+                  disabled={!edit}
+                  onChange={(e) => setStudentId(e.target.value)}
+                />
+                {edit ? (
+                  <SaveIcon
+                    onClick={submitChangeStudentId}
+                    style={{ cursor: 'pointer' }}
+                  />
+                ) : (
+                  <EditIcon
+                    onClick={() => setEdit(true)}
+                    style={{ cursor: 'pointer' }}
+                  />
+                )}
+              </div>
+            </div>
           </div>
           <div className="infor">
             <div className="title">Email</div>
@@ -171,7 +194,9 @@ export default function UserDetail() {
                     onChange={handleChange}
                   >
                     <MenuItem value={userStatus.ACTIVE.value}>Active</MenuItem>
-                    <MenuItem value={userStatus.BLOCKED.value}>Blocked</MenuItem>
+                    <MenuItem value={userStatus.BLOCKED.value}>
+                      Blocked
+                    </MenuItem>
                   </Select>
                 </FormControl>
               </Box>
@@ -179,18 +204,6 @@ export default function UserDetail() {
           </div>
         </div>
       </div>
-
-      {/* <div className="class-list">
-        <div className="class-list__title">Class List</div>
-        <hr />
-        <div className="list">
-          {classList.map((item) => (
-            <Link to={`/classes/${item.id}`} key={item.id} className="item">
-              <div className="name">{item.name}</div>
-            </Link>
-          ))}
-        </div>
-      </div> */}
 
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{"Gradebook Admin's Nonification"}</DialogTitle>

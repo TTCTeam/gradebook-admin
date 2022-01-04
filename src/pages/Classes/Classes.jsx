@@ -24,11 +24,10 @@ export default function Classes() {
     const fetchClasses = async () => {
       setIsLoading(true);
       const res = await getAllClasses();
-      if (res.status===200){
+      if (res.status === 200) {
         setClasses(res.data);
-      }
-      else {
-        alert("Error.");
+      } else {
+        alert('Error.');
       }
       setIsLoading(false);
     };
@@ -43,7 +42,18 @@ export default function Classes() {
   };
 
   const handleChangeSort = (e) => {
-    setSort(e.target.value);
+    const newSort = e.target.value;
+    setSort(newSort);
+    if (newSort === 'Ascending') {
+      classes.sort(function (a, b) {
+        return new Date(a.createdAt) - new Date(b.createdAt);
+      });
+    }
+    if (newSort === 'Descending') {
+      classes.sort(function (a, b) {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+    }
   };
 
   return (

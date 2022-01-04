@@ -42,7 +42,7 @@ export default function AdminAccounts() {
       if (res.status === 200) {
         setAdminAccounts(res.data);
       } else {
-        alert("Error.");
+        alert('Error.');
       }
       setIsLoading(false);
     };
@@ -70,13 +70,24 @@ export default function AdminAccounts() {
       setUsername('');
       setName('');
     } else {
-      alert("Error.");
+      alert('Error.');
     }
     handleClose();
   };
 
   const handleChangeSort = (e) => {
-    setSort(e.target.value);
+    const newSort = e.target.value;
+    setSort(newSort);
+    if (newSort === 'Ascending') {
+      adminAccounts.sort(function (a, b) {
+        return new Date(a.createdAt) - new Date(b.createdAt);
+      });
+    }
+    if (newSort === 'Descending') {
+      adminAccounts.sort(function (a, b) {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+    }
   };
 
   return (
@@ -85,12 +96,12 @@ export default function AdminAccounts() {
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={isLoading}
       >
-        <CircularProgress/>
+        <CircularProgress />
       </Backdrop>
       <h2>Admin Accounts</h2>
       <div className="top">
         <div className="search">
-          <SearchIcon/>
+          <SearchIcon />
           <InputBase
             sx={{ ml: 1, flex: 1 }}
             placeholder="Search..."
@@ -120,7 +131,7 @@ export default function AdminAccounts() {
           </div>
           <Button
             variant="contained"
-            startIcon={<AddIcon/>}
+            startIcon={<AddIcon />}
             onClick={handleOpen}
           >
             Add new

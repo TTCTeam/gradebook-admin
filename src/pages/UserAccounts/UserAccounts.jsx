@@ -43,7 +43,18 @@ export default function UserAccounts() {
   };
 
   const handleChangeSort = (e) => {
-    setSort(e.target.value);
+    const newSort = e.target.value;
+    setSort(newSort);
+    if (newSort === 'Ascending') {
+      userAccounts.sort(function (a, b) {
+        return new Date(a.createdAt) - new Date(b.createdAt);
+      });
+    }
+    if (newSort === 'Descending') {
+      userAccounts.sort(function (a, b) {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+    }
   };
 
   return (

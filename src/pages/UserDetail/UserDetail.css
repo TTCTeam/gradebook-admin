@@ -72,6 +72,19 @@
   font-size: 20px;
 }
 
+.user-detail .about .content .infor .value .studentId {
+  display: flex;
+  align-items: center;
+  grid-gap: 20px;
+}
+
+.user-detail .about .content .infor .value .studentId .input-base {
+  border: 1px solid #ccc;
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+}
+
 .user-detail .class-list {
   width: 100%;
   height: auto;

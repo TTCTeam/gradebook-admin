@@ -68,7 +68,7 @@ export default function AdminDetail() {
       <div className="cover-image" />
       <div className="avatar">
         <Avatar
-          {...stringAvatar(adminDetail.name || 'Admin Detail')}
+          {...stringAvatar(adminDetail.name + ' Admin' || 'Admin Detail')}
           sx={{ width: 150, height: 150 }}
         />
       </div>

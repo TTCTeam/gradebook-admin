@@ -57,6 +57,10 @@ export default function AdminAccounts() {
   };
 
   const submitCreateNewAdminAccount = async () => {
+    if (name === '' || username === '' || password === '') {
+      alert('Please fill in all fields.');
+      return;
+    }
     const newAdminAccount = {
       name,
       username,

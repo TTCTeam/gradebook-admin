@@ -1,15 +1,31 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import SignInPage from './pages/SignInPage/SignInPage';
-import Navbar from './components/Navbar/Navbar';
-import AdminAccounts from './pages/AdminAccounts/AdminAccounts';
-import UserAccounts from './pages/UserAccounts/UserAccounts';
-import Classes from './pages/Classes/Classes';
-import UserDetail from './pages/UserDetail/UserDetail';
-import AdminDetail from './pages/AdminDetail/AdminDetail';
-import ClassDetail from './pages/ClassDetail/ClassDetail';
+import React from "react";
+import {
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
+import SignInPage from "./pages/SignInPage/SignInPage";
+import Navbar from "./components/Navbar/Navbar";
+import AdminAccounts from "./pages/AdminAccounts/AdminAccounts";
+import UserAccounts from "./pages/UserAccounts/UserAccounts";
+import Classes from "./pages/Classes/Classes";
+import UserDetail from "./pages/UserDetail/UserDetail";
+import AdminDetail from "./pages/AdminDetail/AdminDetail";
+import ClassDetail from "./pages/ClassDetail/ClassDetail";
+import { useDispatch } from "react-redux";
+import { checkAutoLogin } from "./store/auth/auth-services";
+import { useSelector } from "react-redux";
 
 export default function App() {
-  const isSignedIn = true;
+  const isSignedIn = useSelector((state) => state.auth.token);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  React.useEffect(() => {
+    checkAutoLogin(dispatch, navigate, location);
+  }, [dispatch, location, navigate]);
   return (
     <div className="App">
       {isSignedIn ? (

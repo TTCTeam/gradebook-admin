@@ -187,7 +187,7 @@ export default function AdminAccounts() {
                   {adminAccount.username}
                 </div>
                 <div className="box" style={{ flex: 2 }}>
-                  {moment(adminAccount.createdAt).format('DD/MM/YYYY')}
+                  {moment(adminAccount.createdAt).format('MM:HH DD/MM/YYYY')}
                 </div>
               </Link>
             ))}

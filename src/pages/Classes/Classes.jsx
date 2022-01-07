@@ -134,7 +134,7 @@ export default function Classes() {
                   {course.name}
                 </div>
                 <div className="box" style={{ flex: 2 }}>
-                  {moment(course.createdAt).format('DD/MM/YYYY')}
+                  {moment(course.createdAt).format('MM:HH DD/MM/YYYY')}
                 </div>
               </Link>
             ))}

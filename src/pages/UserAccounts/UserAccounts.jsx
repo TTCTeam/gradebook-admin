@@ -157,7 +157,7 @@ export default function UserAccounts() {
                   {userAccount.email}
                 </div>
                 <div className="box" style={{ flex: 1 }}>
-                  {moment(userAccount.createdAt).format('DD/MM/YYYY')}
+                  {moment(userAccount.createdAt).format('MM:HH DD/MM/YYYY')}
                 </div>
                 <div className="box" style={{ flex: 1 }}>
                   {Object.values(userStatus).find((status) => status.value === userAccount.status)?.text}

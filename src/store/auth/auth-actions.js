@@ -2,7 +2,6 @@ import { pending, showError, success } from '../ui/ui-actions';
 // eslint-disable-next-line import/no-cycle
 import { runLogoutTimer } from './auth-services';
 
-
 export const LOGOUT_ACTION = 'LOGOUT';
 export const LOGIN_SUCCESS_ACTION = 'LOGIN_SUCCESS';
 export const FETCH_PROFILE_ACTION = 'FETCH_PROFILE_ACTION';
@@ -45,6 +44,7 @@ export function signIn(credentials, history) {
     const url = `${process.env.REACT_APP_BASE_URL}/admin/signin`;
 
     const cre = `username=${credentials.username}&password=${credentials.password}`;
+
     const response = await fetch(url, {
       method: 'POST',
       body: cre,
@@ -56,9 +56,8 @@ export function signIn(credentials, history) {
     if (response.ok) {
       const data = await response.json();
       const expirationTime = new Date(
-        new Date().getTime() + +data.expiresIn * 1000,
+        new Date().getTime() + +data.expiresIn * 1000
       );
-      console.log(data);
       localStorage.setItem('token', data.token);
       localStorage.setItem('expirationTime', expirationTime.toISOString());
 
@@ -66,9 +65,13 @@ export function signIn(credentials, history) {
       dispatch(loginConfirmAction(data));
       dispatch(success());
 
-        history('/');
+      history('/');
     } else {
-      dispatch(showError('Your account has not been registered! If you did please contact admin.'));
+      dispatch(
+        showError(
+          'Your account has not been registered! If you did please contact admin.'
+        )
+      );
     }
   };
 }

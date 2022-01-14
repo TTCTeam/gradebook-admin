@@ -1,6 +1,7 @@
 import { pending, showError, success } from '../ui/ui-actions';
 // eslint-disable-next-line import/no-cycle
 import { runLogoutTimer } from './auth-services';
+import { apiUrl } from '../../constant/apiUrl';
 
 export const LOGOUT_ACTION = 'LOGOUT';
 export const LOGIN_SUCCESS_ACTION = 'LOGIN_SUCCESS';
@@ -41,7 +42,7 @@ export function signIn(credentials, history) {
   return async (dispatch) => {
     dispatch(pending());
 
-    const url = `${process.env.REACT_APP_BASE_URL}/admin/signin`;
+    const url = `${apiUrl}/admin/signin`;
 
     const cre = `username=${credentials.username}&password=${credentials.password}`;
 

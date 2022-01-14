@@ -1,1 +1,1 @@
-export const apiUrl = 'https://gradebookbe-final.herokuapp.com';
+export const apiUrl = 'http://localhost:5000';

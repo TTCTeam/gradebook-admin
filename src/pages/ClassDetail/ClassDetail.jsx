@@ -56,7 +56,7 @@ export default function ClassDetail() {
           <div className="infor">
             <div className="title">Created At</div>
             <div className="value">
-              {moment(classDetail.createdAt).format('MM:HH DD/MM/YYYY')}
+              {moment(classDetail.createdAt).format('DD/MM/YYYY')}
             </div>
           </div>
         </div>

@@ -88,7 +88,7 @@ export default function AdminDetail() {
           <div className="infor">
             <div className="title">Created At</div>
             <div className="value">
-              {moment(adminDetail.createdAt).format('MM:HH DD/MM/YYYY')}
+              {moment(adminDetail.createdAt).format('DD/MM/YYYY')}
             </div>
           </div>
         </div>

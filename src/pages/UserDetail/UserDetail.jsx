@@ -180,7 +180,7 @@ export default function UserDetail() {
           <div className="infor">
             <div className="title">Created At</div>
             <div className="value">
-              {moment(userDetail.createdAt).format('MM:HH DD/MM/YYYY')}
+              {moment(userDetail.createdAt).format('DD/MM/YYYY')}
             </div>
           </div>
           <div className="infor">
